@@ -1,47 +1,12 @@
 # point_support
 
-Tests:
+This repository contains various programs that aided in the testing of the limits of ROS-Industrial's [Reach Package](https://github.com/ros-industrial/reach_ros2) 
+The goal was to enable creation of various (as of now- see python comments for details) rectangular point cloud files to both test reachability for a local robot (Motoman gp20) as well as testing the limits
+of how many points RVIZ could be given and reach scores assed before we would start running into issues- as of 6/8/23 the max cap* was deemed to be 1000
 
-Test #1
-	num_points = ~10^6
-	time_till_completion: NULL
-	
--------------------------------------------------------------------------------------
-Self Terminated:
-	Errors Thrown: None
-	Time Terminated: ~9:53.04 after start
-	
-Test #2
-	num_points = ~10^3
-	time_till_completion: 1:15.66
-	
-Test #3
-	num_points = ~10^6
-	time_till_completion: NULL
-	
--------------------------------------------------------------------------------------
-Self Terminated:
-	Errors Thrown: None
-	Time Terminated: ~5:16.52 after start
-	
-Test #4
-	num_points = ~10^5
-	time_till_completion: NULL
-	
--------------------------------------------------------------------------------------
-Self Terminated:
-	Errors Thrown: process has died [pid 4417, exit code -9, cmd/...]
-	Time Terminated: ~9:15.35
-	
-Test #5
-	num_points = ~10^4
-	time_till_completion: NULL
-	
--------------------------------------------------------------------------------------
-Self Terminated:
-	Errors Thrown: None
-	Time Terminated: NULL - Had to manually shut down the computer
+## Python Code
+### make_point_file.py
+A Python file that takes user input and generates a populated rectangular mesh of points into a txt file that is the apporopriate format to be parsed by the "TXT to PCD converter" in this repo!
 
-Test #6
-	num_points = ~10^3
-	time_till_completion: 3:12.19
+
+*There can be more- throretically- however when increased by a factor of 10 the program began to have issues- see /testing/upper_bounds.txt for details!
