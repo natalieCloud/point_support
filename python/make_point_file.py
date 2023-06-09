@@ -1,6 +1,6 @@
 ##@brief A Python file that generates a file full of points that model a square mesh##
 
-import numpy as numpy
+import numpy
 
 ##
 #@mainpage Python TXT Point Generator
@@ -12,8 +12,22 @@ import numpy as numpy
 #
 #@section notes_main Example
 # INPUT:
+# Enter the name && path of the (.txt) file you wish to generate: *path/to/file/filename.txt*
+# Aproximatley how many points would you like in the mesh? (#1^#2 format please):  *3^3*
+# What is the center coordinate for your mesh? (x y z format please):  *0 0 0*
+# What are the dimensions of the geometry? (#.etc #.etc format please): *2.0 2.0*
+# Which surface would you like the geometry to be on? (X OR Y OR Z): *Z*
 #
 # OUTPUT:
+# -1.0 -1.0 0
+# -1.0 0 0 0
+# -1.0 1.0 0
+# 0 -1.0 0
+# 0 0 0
+# 0 1.0 0
+# 1.0 -1.0 0
+# 1.0 0 0
+# 1.0 1.0 0
 ##
 
 # FUNCTIONS:
