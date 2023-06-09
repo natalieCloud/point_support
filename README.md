@@ -4,7 +4,7 @@ This repository contains various programs that aided in the testing of the limit
 The goal was to enable creation of various (as of now- see python comments for details) rectangular point cloud files to both test reachability for a local robot (Motoman gp20) as well as testing the limits
 of how many points RVIZ could be given and reach scores assed before we would start running into issues- as of 6/8/23 the max cap* was deemed to be 1000
 
-*There can be more- throretically- however when increased by a factor of 10 the program began to have issues- see /testing/upper_bounds.txt for details!
+*There can be more- theoretically- however when increased by a factor of 10 the program began to have issues- see /testing/upper_bounds.txt for details!
 
 # *Python Code*
 
