@@ -1,0 +1,1 @@
+For the results of this study shown, the model of robot used was the motoman gp20 for which support was taken from https://github.com/OSU-AIMS/aims-robots-all
