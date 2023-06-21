@@ -1,3 +1,0 @@
-PoseArray
----
-double[]
