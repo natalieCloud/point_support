@@ -15,3 +15,6 @@ i.e. 10 is un-reachable, 9 just barely reachable, 8 ba little reachable, and so 
 
 In the interest of preserving a standard scale to reach, as well as the ability to further narrow down the scores and standardize them later without fear of losing data in the 
 current stage it was deemed better to go with the first option!
+
+### Important Changes:
+In the reach results used, the reach_study conducted omitted the addition of the start and goal poses, as a result the structure of the xml parser has been built around that assumption. If it is deemed nessesary to retain that data, further ammendements to the parser will be made, as it stands though it is currently unused/accounted for!
