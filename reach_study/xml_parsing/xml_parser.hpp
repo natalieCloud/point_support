@@ -43,13 +43,25 @@
 namespace reachXML {
 
 class xmlParser {
+
     public:
     
+        /**
+        * The struct that contains the pose and score data.
+        */
+        struct poseData {
+            _Float64 * pose; // Isometry3D representation of the pose
+            int reachResult; // Is the pose considered "reachable", 0 no 1 yes
+            _Float64 reachScore; // Score for the reachability of the pose
+        };
+
         /**
         * Takes in the name of an xml file as a param, and returns a list of structs
         * that contain the pose array as well as the reachability and score.
         */
-        static void parseXML(const std::string fname); 
+        static void parseXML(const std::string fname);
+
+        static const int MATRIX_SIZE = 16; 
 
     private:
 
@@ -68,27 +80,22 @@ class xmlParser {
         /**
          * Fills the array with data from the each of the item nodes
         */
-        static poseData * populatePoses(rapidxml::xml_node<> * root_node);
+        static void populatePoses(rapidxml::xml_node<> * root_node, struct poseData poses[], int count);
 
         /**
          * Populates the individual struct for each array element
         */
-        static poseData * populateStruct(rapidxml::xml_node<> * root_node);
+        static void populateStruct(rapidxml::xml_node<> * root_node, struct poseData *data);
 
         /**
          * Obtains the data from the Isometry3D pose matrix
         */
         static _Float64 * getPoseMatrix(rapidxml::xml_node<> * item_node); 
+        /**
+         * The poseData array
+        */
+        static poseData *poses;
 
-};
-
-/**
- * The struct that contains the pose and score data.
-*/
-struct poseData {
-    const _Float64 pose [16]; // Isometry3D representation of the pose
-    const int reachResult; // Is the pose considered "reachable", 0 no 1 yes
-    const _Float64 reachScore; // Score for the reachability of the pose
 };
 
 } //namespace reachXML 
