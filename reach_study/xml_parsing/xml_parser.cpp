@@ -31,12 +31,27 @@ void xmlParser::parseXML(std::string fname) {
     //Find the root of the data, in our case, boost_serialization
     root_node = doc.first_node(0);
 
-    rapidxml::xml_node<> * item_node = descendToItem(root_node);
+    
 
     //TEST PRINT START
-    std::string sttr = item_node->first_attribute()->value();
+    std::string sttr = root_node->first_attribute()->value();
     std::cout << sttr << std::endl;
+    std::cout << "Num points: " << count << std::endl; 
     //TEST PRINT END
+
+    poseData data = xmlParser::populatePoses(item_node);
+
+}
+
+int xmlParser::getItemCount(rapidxml::xml_node<> * root_node) {
+
+    root_node = root_node->first_node(0); // <db>
+    root_node = root_node->first_node(0); // <results>
+    root_node = root_node->first_node(0); // <count>
+    root_node = root_node->next_sibling(); // <item_version>
+    root_node = root_node->next_sibling(); // <item>
+    root_node = root_node->first_node(0); // <count>
+    return std::stoi(root_node->value());
 }
 
 rapidxml::xml_node<> * xmlParser::descendToItem(rapidxml::xml_node<> * root_node){
@@ -52,4 +67,20 @@ rapidxml::xml_node<> * xmlParser::descendToItem(rapidxml::xml_node<> * root_node
 
     return root_node;
 }
+
+poseData * populatePoses(rapidxml::xml_node<> * root_node) {
+
+    rapidxml::xml_node<> * item_node = descendToItem(root_node);
+    int count = getItemCount(root_node);
+
+    poseData dataArr[count];
+
+    for (int i = 0; i < count; i++) {
+
+        //func call to populate struct
+
+        item_node = item_node->next_sibling();
+    }
+}
+
 } //namespace reachXML
