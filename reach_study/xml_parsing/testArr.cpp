@@ -37,7 +37,7 @@ int main(int argc, char **argv) {
     Eigen::Matrix3d t = m.block<3, 3>(0,0);
     std::cout << t << std::endl;
 
-    Eigen::Vector3d v = m.block<3, 1>(3, 0);
+    Eigen::Vector3d v = m.block<3, 1>(0, 3);
     std::cout << v << std::endl;
 
     return 0;

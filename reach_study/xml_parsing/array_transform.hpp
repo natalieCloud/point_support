@@ -31,29 +31,7 @@ class ArrayTF {
          */
         static Eigen::Quaternion<_Float64> getQuaternion(_Float64 * poseArray);
 
-        /** 
-         * @brief This function takes an input of a static array of size 16 and transforms
-         * it into a matrix that can be used in the construction of an Isometry3D
-         *  
-         * @param poseArray: The array holding the pose information
-         * 
-         * @returns
-         * A 4x4 matrix representation of the pose
-         */
-        static Eigen::Matrix4d composeMatrix(_Float64 * poseArray);  
-
     private:
-
-        // /** 
-        //  * @brief This function takes an input of a static array of size 16 and transforms
-        //  * it into a matrix that can be used in the construction of an Isometry3D
-        //  *  
-        //  * @param poseArray: The array holding the pose information
-        //  * 
-        //  * @returns
-        //  * A 4x4 matrix representation of the pose
-        //  */
-        // static Eigen::Matrix4d composeMatrix(_Float64 * poseArray);  
 
         /** 
          * @brief This function takes an input of a static array of size 16 and transforms
