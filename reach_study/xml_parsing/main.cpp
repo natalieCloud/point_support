@@ -1,4 +1,6 @@
 #include "xml_parser.hpp"
+#include <vector>
+#include <iostream>
 
 /**
  * Used in manual testing, the actual func written above does the brunt of it 
@@ -6,7 +8,10 @@
 */
 int main(int argc, char **argv) { 
 
-    reachXML::xmlParser::parseXML(argv[1]);
+    std::vector<reachXML::xmlParser::PoseData> poses = reachXML::xmlParser::parseXML(argv[1]);
+
+    std::cout << (poses[1].reachResult) << std::endl;
+    std::cout << (poses[1].reachResult? "Sucess!" : "Rip") << std::endl;
 
     return 0;
 }
