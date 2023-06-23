@@ -1,5 +1,5 @@
 #include "xml_parser.hpp"
-#include <vector>
+
 #include <iostream>
 
 /**
@@ -8,7 +8,7 @@
 */
 int main(int argc, char **argv) { 
 
-    std::vector<reachXML::xmlParser::PoseData> poses = reachXML::xmlParser::parseXML(argv[1]);
+    std::vector<ReachXML::XMLParser::PoseData> poses = ReachXML::XMLParser::parseXML(argv[1]);
 
     std::cout << (poses[1].reachResult) << std::endl;
     std::cout << (poses[1].reachResult? "Sucess!" : "Rip") << std::endl;
