@@ -7,6 +7,13 @@
 #include <stdlib.h>
 
 /**
+ * @author Natalie Chmura 
+ * 
+ * @brief A class that transforms a 16-point pose array into its corresponding quaternion pose 
+ * and transformation matrix!
+ */
+
+/**
  * @namespace ReachArray
  */
 namespace ReachArray {
@@ -31,6 +38,18 @@ class ArrayTF {
          */
         static Eigen::Quaternion<_Float64> getQuaternion(_Float64 * poseArray);
 
+        /**
+         * @brief This function inputs an array of pose data (representing a matrix of type
+         * Isometrey3D) and performs a series of transformations to produce the transformation
+         * matrix associated with that pose data!
+         * 
+         * @param poseArray: The array holding the pose information
+         * 
+         * @returns
+         * A 3x1 matrix of the pose's xyz coordinates!
+         */
+        static Eigen::Vector3d getTranslation(_Float64 * poseArray);
+
     private:
 
         /** 
@@ -42,7 +61,7 @@ class ArrayTF {
          * @returns
          * A Isometry3D of the pose
          */
-        static Eigen::Isometry3d getIsometry(_Float64 * poseArray);  
+        static Eigen::Isometry3d setIsometry(_Float64 * poseArray);  
 };    
 
 } //namespace ReachArray

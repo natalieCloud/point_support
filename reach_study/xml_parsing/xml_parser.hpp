@@ -2,6 +2,8 @@
 #define POINT_SUPPORT_XML_PARSER_H
 
 #include "../include/rapidxml.hpp"
+#include "array_transform.hpp"
+#include <eigen3/Eigen/Geometry>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +12,14 @@
 
 #include <vector>
 #include <string>
+
+/**
+ * @author Natalie Chmura 
+ * 
+ * @brief This contains a class that read infor from the XML file genrated by the reach study
+ * and parses it into an array of data nodes! (^u^)
+ */
+
 /**
  * @namespace ReachXML
 */
@@ -30,12 +40,14 @@ class XMLParser {
          * @struct PoseData
          * @brief Struct that contains the pose and score data.
          * 
-         * @param pose: Isometry3D representation of the pose
+         * @param translation: A 3x1 vector that represents the pose's xyz coordinates
+         * @param quater: A quaternion that represents the pose's rotation
          * @param reachResult: Is the pose considered "reachable", 0 no 1 yes
          * @param reachScore: Score for the reachability of the pose
          */ 
         struct PoseData {
-            _Float64 * pose; 
+            Eigen::Vector3d translation;
+            Eigen::Quaternion<_Float64> quater;
             int reachResult;
             _Float64 reachScore; 
         };

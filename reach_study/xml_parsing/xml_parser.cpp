@@ -1,5 +1,13 @@
 #include "xml_parser.hpp"
 
+/**
+ * @author Natalie Chmura 
+ * 
+ * @brief This contains a class that read infor from the XML file genrated by the reach study
+ * and parses it into an array of data nodes! (^u^)
+ */
+
+
 namespace ReachXML {
 
 std::vector<XMLParser::PoseData> XMLParser::parseXML(std::string fname) {
@@ -12,12 +20,11 @@ std::vector<XMLParser::PoseData> XMLParser::parseXML(std::string fname) {
 	buffer.push_back('\0');
 	// Parse the buffer using the rapid-xml file parsing library into doc 
 	doc.parse<0>(&buffer[0]);
-    //Find the root of the data, in our case, boost_serialization
+    //Find the root of the data, in our case boost_serialization
     root_node = doc.first_node(0);
 
     int count = XMLParser::getItemCount(root_node);
     rapidxml::xml_node<> * item_node = XMLParser::descendToItem(root_node);
-    //Reads the poses into a vector
     std::vector<PoseData> poses = XMLParser::populatePoses(item_node, count);
 
     return poses;
@@ -51,7 +58,8 @@ std::vector<XMLParser::PoseData> XMLParser::populatePoses(rapidxml::xml_node<> *
 
 void XMLParser::populateStruct(rapidxml::xml_node<> * item_node, struct PoseData *data) {
 
-    data->pose = XMLParser::getPoseMatrix(item_node);
+    data->translation = POINT_SUPPORT_ARRAY_TRANSFORM_H::ReachArray::ArrayTF::getTranslation(XMLParser::getPoseMatrix(item_node));
+    data->quater = POINT_SUPPORT_ARRAY_TRANSFORM_H::ReachArray::ArrayTF::getQuaternion(XMLParser::getPoseMatrix(item_node));
     data->reachResult = std::stoi(item_node->first_node()->value());
     data->reachScore = std::atof(item_node->first_node()->next_sibling()->next_sibling()->value());
 }

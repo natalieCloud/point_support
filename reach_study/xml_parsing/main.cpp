@@ -10,8 +10,10 @@ int main(int argc, char **argv) {
 
     std::vector<ReachXML::XMLParser::PoseData> poses = ReachXML::XMLParser::parseXML(argv[1]);
 
-    std::cout << (poses[1].reachResult) << std::endl;
-    std::cout << (poses[1].reachResult? "Sucess!" : "Rip") << std::endl;
+    std::cout << (poses[0].reachResult) << std::endl;
+    std::cout << (poses[0].translation) << std::endl;
+    std::cout << (poses[0].quater) << std::endl;
+    std::cout << (poses[0].reachResult? "Sucess!" : "Rip") << std::endl;
 
     return 0;
 }
