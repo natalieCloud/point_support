@@ -1,7 +1,7 @@
 #ifndef POINT_SUPPORT_XML_PARSER_H
 #define POINT_SUPPORT_XML_PARSER_H
 
-#include "../include/rapidxml.hpp"
+#include "rapidxml.hpp"
 #include "array_transform.hpp"
 #include <eigen3/Eigen/Geometry>
 

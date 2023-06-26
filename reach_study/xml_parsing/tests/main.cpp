@@ -1,4 +1,4 @@
-#include "xml_parser.hpp"
+#include "../include/reach_parse/xml_parser.hpp"
 
 #include <iostream>
 
@@ -10,10 +10,17 @@ int main(int argc, char **argv) {
 
     std::vector<ReachXML::XMLParser::PoseData> poses = ReachXML::XMLParser::parseXML(argv[1]);
 
-    std::cout << (poses[0].reachResult) << std::endl;
-    std::cout << (poses[0].translation) << std::endl;
-    std::cout << (poses[0].quater) << std::endl;
-    std::cout << (poses[0].reachResult? "Sucess!" : "Rip") << std::endl;
+    int numpoints = 0;
+
+    std::cout << "How many points would you like printed? \n";
+    std::cin >> numpoints;
+
+    for (int i = 0; i < numpoints; i++) {
+    std::cout << (poses[i].reachResult) << std::endl;
+    std::cout << (poses[i].translation) << std::endl;
+    std::cout << (poses[i].quater) << std::endl;
+    std::cout << (poses[i].reachResult? "Sucess!" : "Rip") << std::endl;
+    }
 
     return 0;
 }
