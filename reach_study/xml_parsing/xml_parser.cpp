@@ -3,7 +3,7 @@
 /**
  * @author Natalie Chmura 
  * 
- * @brief This contains a class that read infor from the XML file genrated by the reach study
+ * @brief This contains a class that reads information from the XML file genrated by the reach study
  * and parses it into an array of data nodes! (^u^)
  */
 
