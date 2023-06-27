@@ -8,7 +8,7 @@
 */
 int main(int argc, char **argv) { 
 
-    std::vector<ReachXML::XMLParser::PoseData> poses = ReachXML::XMLParser::parseXML(argv[1]);
+    std::vector<ReachXML::XMLParser::ReachData> poses = ReachXML::XMLParser::parseXML(argv[1]);
 
     int numpoints = 0;
 
@@ -17,8 +17,8 @@ int main(int argc, char **argv) {
 
     for (int i = 0; i < numpoints; i++) {
     std::cout << (poses[i].reachResult) << std::endl;
-    std::cout << (poses[i].translation) << std::endl;
-    std::cout << (poses[i].quater) << std::endl;
+    std::cout << (poses[i].pose.translation) << std::endl;
+    std::cout << (poses[i].pose.quater) << std::endl;
     std::cout << (poses[i].reachResult? "Sucess!" : "Rip") << std::endl;
     }
 
@@ -27,11 +27,11 @@ int main(int argc, char **argv) {
     //TEST PRINT START
     // int count = xmlParser::getItemCount(root_node);
     // rapidxml::xml_node<> * item_node = xmlParser::descendToItem(root_node);
-    // struct poseData test;
+    // struct ReachData test;
     // xmlParser::populateStruct(item_node, &test);
     // std::cout.precision(17);
     // std::cout  << test.reachScore << std::endl;
-    // struct poseData poses[count];
+    // struct ReachData poses[count];
     // xmlParser::populatePoses(item_node, poses, count);
 
     // std::cout << "Number of nodes: " << count << std::endl;

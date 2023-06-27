@@ -10,7 +10,7 @@
 
 namespace ReachXML {
 
-std::vector<XMLParser::PoseData> XMLParser::parseXML(std::string fname) {
+std::vector<XMLParser::ReachData> XMLParser::parseXML(std::string fname) {
 
     rapidxml::xml_document<> doc;
     rapidxml::xml_node<> * root_node;
@@ -25,7 +25,7 @@ std::vector<XMLParser::PoseData> XMLParser::parseXML(std::string fname) {
 
     int count = XMLParser::getItemCount(root_node);
     rapidxml::xml_node<> * item_node = XMLParser::descendToItem(root_node);
-    std::vector<PoseData> poses = XMLParser::populatePoses(item_node, count);
+    std::vector<ReachData> poses = XMLParser::populatePoses(item_node, count);
 
     return poses;
 }
@@ -44,8 +44,8 @@ rapidxml::xml_node<> * XMLParser::descendToItem(rapidxml::xml_node<> * root_node
         ->next_sibling()->first_node()->next_sibling()->next_sibling();
 }
 
-std::vector<XMLParser::PoseData> XMLParser::populatePoses(rapidxml::xml_node<> * item_node, int count) {
-    std::vector<XMLParser::PoseData> poseVector;
+std::vector<XMLParser::ReachData> XMLParser::populatePoses(rapidxml::xml_node<> * item_node, int count) {
+    std::vector<XMLParser::ReachData> poseVector;
     poseVector.reserve(count);
 
     for (int i = 0; i < count && item_node; i++) {
@@ -56,10 +56,10 @@ std::vector<XMLParser::PoseData> XMLParser::populatePoses(rapidxml::xml_node<> *
     return poseVector;
 }
 
-void XMLParser::populateStruct(rapidxml::xml_node<> * item_node, struct PoseData *data) {
-
-    data->translation = POINT_SUPPORT_ARRAY_TRANSFORM_H::ReachArray::ArrayTF::getTranslation(XMLParser::getPoseMatrix(item_node));
-    data->quater = POINT_SUPPORT_ARRAY_TRANSFORM_H::ReachArray::ArrayTF::getQuaternion(XMLParser::getPoseMatrix(item_node));
+void XMLParser::populateStruct(rapidxml::xml_node<> * item_node, struct ReachData *data) {
+    
+    data->pose.quater = POINT_SUPPORT_ARRAY_TRANSFORM_H::ReachArray::ArrayTF::getQuaternion(XMLParser::getPoseMatrix(item_node));
+    data->pose.translation = POINT_SUPPORT_ARRAY_TRANSFORM_H::ReachArray::ArrayTF::getTranslation(XMLParser::getPoseMatrix(item_node));
     data->reachResult = std::stoi(item_node->first_node()->value());
     data->reachScore = std::atof(item_node->first_node()->next_sibling()->next_sibling()->value());
 }
