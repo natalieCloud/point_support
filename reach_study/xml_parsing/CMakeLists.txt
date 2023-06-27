@@ -4,8 +4,8 @@ cmake_minimum_required(VERSION 3.5)
 
 project("ReachParse")
 
-add_library(ReachParse "src/array_transform.cpp" "src/xml_parser.cpp" 
-    "include/array_transform.hpp" "include/xml_parser.hpp")
+add_library(ReachParse STATIC src/array_transform.cpp src/xml_parser.cpp 
+    include/reach_parse/array_transform.hpp include/reach_parse/xml_parser.hpp)
 
 install(TARGETS ReachParse DESTINATION lib/xml_parser)
 
