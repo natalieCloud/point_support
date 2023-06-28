@@ -10,6 +10,8 @@
 
 namespace ReachXML {
 
+// PUBLIC:
+
 std::vector<XMLParser::ReachData> XMLParser::parseXML(std::string fname) {
 
     rapidxml::xml_document<> doc;
@@ -29,6 +31,28 @@ std::vector<XMLParser::ReachData> XMLParser::parseXML(std::string fname) {
 
     return poses;
 }
+
+std::map<XMLParser::PoseData, XMLParser::ResultData> XMLParser::parseMap(std::string fname) {
+
+    rapidxml::xml_document<> doc;
+    rapidxml::xml_node<> * root_node;
+    //Read the file into a vector
+    std::ifstream theFile (fname);
+    std::vector<char> buffer((std::istreambuf_iterator<char>(theFile)), std::istreambuf_iterator<char>());
+	buffer.push_back('\0');
+	// Parse the buffer using the rapid-xml file parsing library into doc 
+	doc.parse<0>(&buffer[0]);
+    //Find the root of the data, in our case boost_serialization
+    root_node = doc.first_node(0);
+
+    int count = XMLParser::getItemCount(root_node);
+    rapidxml::xml_node<> * item_node = XMLParser::descendToItem(root_node);
+    std::map<PoseData, ResultData> poses = XMLParser::populatePoseMap(item_node, count);
+
+    return poses;
+}
+
+// PRIVATE:
 
 int XMLParser::getItemCount(rapidxml::xml_node<> * root_node) {
 
@@ -56,12 +80,25 @@ std::vector<XMLParser::ReachData> XMLParser::populatePoses(rapidxml::xml_node<> 
     return poseVector;
 }
 
+std::map<XMLParser::PoseData, XMLParser::ResultData> XMLParser::populatePoseMap(rapidxml::xml_node<> * item_node, int count) {
+    std::map<XMLParser::PoseData, XMLParser::ResultData> poseMap;
+
+    for (int i = 0; i < count && item_node; i++) {
+        XMLParser::ReachData pose;
+        XMLParser::populateStruct(item_node, &pose);
+        poseMap.emplace(pose.pose, pose.result);
+    }
+
+    return poseMap;
+}
+
 void XMLParser::populateStruct(rapidxml::xml_node<> * item_node, struct ReachData *data) {
     
     data->pose.quater = POINT_SUPPORT_ARRAY_TRANSFORM_H::ReachArray::ArrayTF::getQuaternion(XMLParser::getPoseMatrix(item_node));
     data->pose.translation = POINT_SUPPORT_ARRAY_TRANSFORM_H::ReachArray::ArrayTF::getTranslation(XMLParser::getPoseMatrix(item_node));
-    data->reachResult = std::stoi(item_node->first_node()->value());
-    data->reachScore = std::atof(item_node->first_node()->next_sibling()->next_sibling()->value());
+    data->result.reachable = std::stoi(item_node->first_node()->value());
+    data->result.score = std::atof(item_node->first_node()->next_sibling()->next_sibling()->value());
+
 }
 
 _Float64 * XMLParser::getPoseMatrix(rapidxml::xml_node<> * item_node) {

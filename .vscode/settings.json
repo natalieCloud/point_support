@@ -67,7 +67,13 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp",
-        "*.srv": "cpp"
+        "*.srv": "cpp",
+        "csignal": "cpp",
+        "strstream": "cpp",
+        "codecvt": "cpp",
+        "future": "cpp",
+        "shared_mutex": "cpp",
+        "cfenv": "cpp"
     },
     "workbench.colorCustomizations": {
         "activityBar.background": "#3F1D58",

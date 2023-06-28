@@ -11,6 +11,7 @@
 #include <fstream>
 
 #include <vector>
+#include <map>
 #include <string>
 
 /**
@@ -46,6 +47,28 @@ class XMLParser {
         struct PoseData {
             Eigen::Vector3d translation;
             Eigen::Quaternion<_Float64> quater;
+
+            //Operator overloads for use as a key
+            //Sorting is pretty arbitrary I think? Like.... one or the other should always differ 
+            //for the poses ¯\_(ツ)_/¯  We'll see i.g.......
+            bool operator==(const PoseData &p) const {
+                return translation == p.translation && quater == p.quater;
+            }
+            bool operator<(const PoseData &p) const {
+                return translation.x() < p.translation.x() || (translation.x() == p.translation.x() && quater.w() == p.quater.w());
+            }
+        };
+
+        /**
+         * @struct ScoreData
+         * @brief Struct that contains the score information for a pose
+         * 
+         * @param result: A boolean that signals if the pose is reachable (true) or not (false).
+         * @param score: The reach score calculated by the reach study
+         */
+        struct ResultData {
+            bool reachable;
+            _Float64 score;
         };
     
         /**
@@ -59,8 +82,7 @@ class XMLParser {
          */ 
         struct ReachData {
             struct PoseData pose;
-            int reachResult;
-            _Float64 reachScore; 
+            struct ResultData result; 
         };
 
         /**
@@ -70,6 +92,14 @@ class XMLParser {
          * @param fname: The name of the file that the user pases in for the xml to read from.
          */
         static std::vector<ReachData> parseXML(const std::string fname);
+
+        /**
+         * @brief This function takes the name of a file and parses it into a vector of data structs that
+         * contian a pose in space, and an associated reachability score
+         * 
+         * @param fname: The name of the file that the user pases in for the xml to read from.
+         */
+        static std::map<PoseData, ResultData> parseMap(const std::string fname);
 
         /**
          * @brief The size of the pose matrix (Will be uneeded? if we change to a quaternion!)
@@ -108,7 +138,18 @@ class XMLParser {
          * 
          * @returns A vector populated with filled ReachData nodes 
          */
-        static std::vector<ReachData> populatePoses(rapidxml::xml_node<> * root_node, int count);
+        static std::vector<ReachData> populatePoses(rapidxml::xml_node<> * item_node, int count);
+
+        /**
+         * @brief This function creates a map with populated ReachData structs
+         * 
+         * @param item_node: The first child node in the xml tree
+         * 
+         * @param count: The number of item child nodes in the xml tree
+         * 
+         * @returns A vector populated with filled ReachData key-value pairs 
+         */
+        static std::map<PoseData, ResultData> populatePoseMap(rapidxml::xml_node<> * item_node, int count); 
 
         /**
          * @brief This function populates a struct with all the pose and reach data

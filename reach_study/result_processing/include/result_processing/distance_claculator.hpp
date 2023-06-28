@@ -34,7 +34,7 @@ class Distance {
          * @param rotation The distance between two rotations (Stored as quaternions)
          */
         struct DistData {
-            _Float64 ditance;
+            _Float64 distance;
             Eigen::Quaternion<_Float64> rotation;
         };
 

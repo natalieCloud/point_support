@@ -12,6 +12,11 @@
 namespace SpaceSpan {
 
 Distance::DistData Distance::findDistance(ReachXML::XMLParser::PoseData pose1, ReachXML::XMLParser::PoseData pose2) {
+    Distance::DistData distance = {
+        distTranslation(pose1.translation, pose2.translation),
+        distRotation(pose1.quater, pose2.quater)
+    };
+    return distance;
 }
 
 _Float64 Distance::distTranslation(Eigen::Vector3d point1, Eigen::Vector3d point2) {
