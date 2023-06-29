@@ -38,6 +38,7 @@ class ScoreRetriver {
          */
         static void getScoreData(int * keys, std::map<int, int> scores, _Float64 * results, int size);
 
+
     private:
         static void popArr(int start, int end, int max, int * keys, std::map<int, int> scores, _Float64 * results);
 

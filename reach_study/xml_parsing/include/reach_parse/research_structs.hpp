@@ -24,7 +24,7 @@ struct PoseData {
     Eigen::Quaternion<_Float64> quater;
 
     //Operator overloads for use as a key
-    //Sorting is pretty arbitrary I think? Like.... one or the other should always differ 
+    //Sorting is pretty arbitrary in this case, I think? Like.... one or the other should always differ 
     //for the poses ¯\_(ツ)_/¯  We'll see i.g.......
     bool operator==(const PoseData &p) const {
         return translation == p.translation && quater == p.quater;
@@ -64,4 +64,4 @@ struct ReachData {
 
 
 
-#endif // POINT_SUPPORT_RESEARCH_STRUCTS_H
+#endif // PS_RESTRUCTS_H
