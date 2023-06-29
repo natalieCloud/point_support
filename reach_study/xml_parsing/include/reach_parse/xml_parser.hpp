@@ -3,7 +3,7 @@
 
 #include "rapidxml.hpp"
 #include "array_transform.hpp"
-#include <eigen3/Eigen/Geometry>
+#include "research_structs.hpp"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,52 +38,12 @@ class XMLParser {
     public:
 
         /**
-         * @struct PoseData
-         * @brief Struct that contains the pose information
+         * @brief This function takes the name of a file and parses it into a vector of data structs that
+         * contian a pose in space, and an associated reachability score
          * 
-         * @param translation: A 3x1 vector that represents the pose's xyz coordinates
-         * @param quater: A quaternion that represents the pose's rotation
+         * @param fname: The name of the file that the user pases in for the xml to read from.
          */
-        struct PoseData {
-            Eigen::Vector3d translation;
-            Eigen::Quaternion<_Float64> quater;
-
-            //Operator overloads for use as a key
-            //Sorting is pretty arbitrary I think? Like.... one or the other should always differ 
-            //for the poses ¯\_(ツ)_/¯  We'll see i.g.......
-            bool operator==(const PoseData &p) const {
-                return translation == p.translation && quater == p.quater;
-            }
-            bool operator<(const PoseData &p) const {
-                return translation.x() < p.translation.x() || (translation.x() == p.translation.x() && quater.w() == p.quater.w());
-            }
-        };
-
-        /**
-         * @struct ScoreData
-         * @brief Struct that contains the score information for a pose
-         * 
-         * @param result: A boolean that signals if the pose is reachable (true) or not (false).
-         * @param score: The reach score calculated by the reach study
-         */
-        struct ResultData {
-            bool reachable;
-            _Float64 score;
-        };
-    
-        /**
-         * @struct ReachData
-         * @brief Struct that contains the pose and score data.
-         * 
-         * @param translation: A 3x1 vector that represents the pose's xyz coordinates
-         * @param quater: A quaternion that represents the pose's rotation
-         * @param reachResult: Is the pose considered "reachable", 0 no 1 yes
-         * @param reachScore: Score for the reachability of the pose
-         */ 
-        struct ReachData {
-            struct PoseData pose;
-            struct ResultData result; 
-        };
+        static std::vector<PS_RESTRUCTS_H::Restructs::ReachData> parseXML(const std::string fname);
 
         /**
          * @brief This function takes the name of a file and parses it into a vector of data structs that
@@ -91,15 +51,7 @@ class XMLParser {
          * 
          * @param fname: The name of the file that the user pases in for the xml to read from.
          */
-        static std::vector<ReachData> parseXML(const std::string fname);
-
-        /**
-         * @brief This function takes the name of a file and parses it into a vector of data structs that
-         * contian a pose in space, and an associated reachability score
-         * 
-         * @param fname: The name of the file that the user pases in for the xml to read from.
-         */
-        static std::map<PoseData, ResultData> parseMap(const std::string fname);
+        static std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> parseMap(const std::string fname);
 
         /**
          * @brief The size of the pose matrix (Will be uneeded? if we change to a quaternion!)
@@ -138,7 +90,7 @@ class XMLParser {
          * 
          * @returns A vector populated with filled ReachData nodes 
          */
-        static std::vector<ReachData> populatePoses(rapidxml::xml_node<> * item_node, int count);
+        static std::vector<PS_RESTRUCTS_H::Restructs::ReachData> populatePoses(rapidxml::xml_node<> * item_node, int count);
 
         /**
          * @brief This function creates a map with populated ReachData structs
@@ -149,7 +101,7 @@ class XMLParser {
          * 
          * @returns A vector populated with filled ReachData key-value pairs 
          */
-        static std::map<PoseData, ResultData> populatePoseMap(rapidxml::xml_node<> * item_node, int count); 
+        static std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> populatePoseMap(rapidxml::xml_node<> * item_node, int count); 
 
         /**
          * @brief This function populates a struct with all the pose and reach data
@@ -158,7 +110,7 @@ class XMLParser {
          * 
          * @param data: A pointer to the struct that will contain the data
          */
-        static void populateStruct(rapidxml::xml_node<> * item_node, struct ReachData *data);
+        static void populateStruct(rapidxml::xml_node<> * item_node, struct PS_RESTRUCTS_H::Restructs::ReachData *data);
 
         /**
          * @brief Obtains the data from the xml tree ( represented by an Isometry#D pose matrix)

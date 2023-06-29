@@ -3,7 +3,10 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <pthread.h>
+#include <thread>
+#include <mutex>
+#include <vector>
+#include <iostream>
 
 #include <map>
 
@@ -30,10 +33,13 @@ class ScoreRetriver {
     public:
 
         /**
-         *  
+         *  @brief Runs a multithreaded process that goes through the entire map and populates an array with
+         * the score data!
          */
-        static _Float64 * getScoreData(int * keys, std::map<int, int> scores);
+        static void getScoreData(int * keys, std::map<int, int> scores, _Float64 * results, int size);
+
     private:
+        static void popArr(int start, int end, int max, int * keys, std::map<int, int> scores, _Float64 * results);
 
 };
 

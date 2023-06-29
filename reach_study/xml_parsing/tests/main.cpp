@@ -3,7 +3,7 @@
 #include <iostream>
 
 void testVector(std::string fname, int num) {
-    std::vector<ReachXML::XMLParser::ReachData> poses = ReachXML::XMLParser::parseXML(fname);
+    std::vector<PS_RESTRUCTS_H::Restructs::ReachData> poses = ReachXML::XMLParser::parseXML(fname);
     std::cout << poses.capacity() << std::endl << std::endl;
 
     for (int i = 0; i < num; i++) {
@@ -16,8 +16,8 @@ void testVector(std::string fname, int num) {
 }
 
 void testMap(std::string fname, int num) {
-    std::map<ReachXML::XMLParser::PoseData, ReachXML::XMLParser::ResultData> poses = ReachXML::XMLParser::parseMap(fname);
-    std::map<ReachXML::XMLParser::PoseData, ReachXML::XMLParser::ResultData>::iterator it = poses.begin();
+    std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> poses = ReachXML::XMLParser::parseMap(fname);
+    std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData>::iterator it = poses.begin();
     std::cout <<poses.size() << std::endl << std::endl;
 
     for (int i = 0; i < num && it != poses.end(); i++) {

@@ -12,7 +12,7 @@ namespace ReachXML {
 
 // PUBLIC:
 
-std::vector<XMLParser::ReachData> XMLParser::parseXML(std::string fname) {
+std::vector<PS_RESTRUCTS_H::Restructs::ReachData> XMLParser::parseXML(std::string fname) {
 
     rapidxml::xml_document<> doc;
     rapidxml::xml_node<> * root_node;
@@ -27,12 +27,12 @@ std::vector<XMLParser::ReachData> XMLParser::parseXML(std::string fname) {
 
     int count = XMLParser::getItemCount(root_node);
     rapidxml::xml_node<> * item_node = XMLParser::descendToItem(root_node);
-    std::vector<ReachData> poses = XMLParser::populatePoses(item_node, count);
+    std::vector<PS_RESTRUCTS_H::Restructs::ReachData> poses = XMLParser::populatePoses(item_node, count);
 
     return poses;
 }
 
-std::map<XMLParser::PoseData, XMLParser::ResultData> XMLParser::parseMap(std::string fname) {
+std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> XMLParser::parseMap(std::string fname) {
 
     rapidxml::xml_document<> doc;
     rapidxml::xml_node<> * root_node;
@@ -47,7 +47,7 @@ std::map<XMLParser::PoseData, XMLParser::ResultData> XMLParser::parseMap(std::st
 
     int count = XMLParser::getItemCount(root_node);
     rapidxml::xml_node<> * item_node = XMLParser::descendToItem(root_node);
-    std::map<PoseData, ResultData> poses = XMLParser::populatePoseMap(item_node, count);
+    std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> poses = XMLParser::populatePoseMap(item_node, count);
 
     return poses;
 }
@@ -68,8 +68,8 @@ rapidxml::xml_node<> * XMLParser::descendToItem(rapidxml::xml_node<> * root_node
         ->next_sibling()->first_node()->next_sibling()->next_sibling();
 }
 
-std::vector<XMLParser::ReachData> XMLParser::populatePoses(rapidxml::xml_node<> * item_node, int count) {
-    std::vector<XMLParser::ReachData> poseVector;
+std::vector<PS_RESTRUCTS_H::Restructs::ReachData> XMLParser::populatePoses(rapidxml::xml_node<> * item_node, int count) {
+    std::vector<PS_RESTRUCTS_H::Restructs::ReachData> poseVector;
     poseVector.reserve(count);
 
     for (int i = 0; i < count && item_node; i++) {
@@ -80,11 +80,11 @@ std::vector<XMLParser::ReachData> XMLParser::populatePoses(rapidxml::xml_node<> 
     return poseVector;
 }
 
-std::map<XMLParser::PoseData, XMLParser::ResultData> XMLParser::populatePoseMap(rapidxml::xml_node<> * item_node, int count) {
-    std::map<XMLParser::PoseData, XMLParser::ResultData> poseMap;
+std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> XMLParser::populatePoseMap(rapidxml::xml_node<> * item_node, int count) {
+    std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> poseMap;
 
     for (int i = 0; i < count && item_node; i++) {
-        XMLParser::ReachData pose;
+        PS_RESTRUCTS_H::Restructs::ReachData pose;
         XMLParser::populateStruct(item_node, &pose);
         poseMap.emplace(pose.pose, pose.result);
     }
@@ -92,7 +92,7 @@ std::map<XMLParser::PoseData, XMLParser::ResultData> XMLParser::populatePoseMap(
     return poseMap;
 }
 
-void XMLParser::populateStruct(rapidxml::xml_node<> * item_node, struct ReachData *data) {
+void XMLParser::populateStruct(rapidxml::xml_node<> * item_node, struct PS_RESTRUCTS_H::Restructs::ReachData *data) {
     
     data->pose.quater = POINT_SUPPORT_ARRAY_TRANSFORM_H::ReachArray::ArrayTF::getQuaternion(XMLParser::getPoseMatrix(item_node));
     data->pose.translation = POINT_SUPPORT_ARRAY_TRANSFORM_H::ReachArray::ArrayTF::getTranslation(XMLParser::getPoseMatrix(item_node));
