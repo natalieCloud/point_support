@@ -2,6 +2,7 @@
 #define PS_RESTRUCTS_H
 
 #include <eigen3/Eigen/Geometry>
+#include "geometry_msgs/msg/pose.hpp"
 
 #include <stdlib.h>
 
@@ -57,6 +58,7 @@ struct ResultData {
  */ 
 struct ReachData {
     struct PoseData pose;
+    geometry_msgs::msg::Pose newPose;
     struct ResultData result; 
 };
 

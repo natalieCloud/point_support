@@ -10,14 +10,13 @@ int main(int argc, char **argv) {
         std::cout << keys[i] << std::endl;
     }
 
-    _Float64 results[100]; 
-    TEMP_THREADING_H::SortScore::ScoreRetriver::getScoreData(keys, score, results, 100);
+    _Float64 * re = TEMP_THREADING_H::SortScore::ScoreRetriver::getScoreData(keys, score, 100);
 
-    std::cout << "Size: " << sizeof(results) /sizeof(_Float64) << std::endl;
+    std::cout << "Size: " << sizeof(re) /sizeof(_Float64) << std::endl;
 
 
     for (int i = 0; i < 100; i++){
-        std::cout << "Key: " << keys[i] << " Score: " << results[i] << std::endl;
+        std::cout << "Key: " << keys[i] << " Score: " << re[i] << std::endl;
     }
 
     for (int i = 0; i < 100; i++) {

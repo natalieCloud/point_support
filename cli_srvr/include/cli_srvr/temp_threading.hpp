@@ -36,7 +36,7 @@ class ScoreRetriver {
          *  @brief Runs a multithreaded process that goes through the entire map and populates an array with
          * the score data!
          */
-        static void getScoreData(int * keys, std::map<int, int> scores, _Float64 * results, int size);
+        static _Float64 * getScoreData(int * keys, std::map<int, int> scores, int size);
 
 
     private:

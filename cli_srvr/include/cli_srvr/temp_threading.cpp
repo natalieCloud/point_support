@@ -12,7 +12,10 @@ namespace SortScore {
 std::mutex mu;
 
 // PUBLIC:
-void ScoreRetriver::getScoreData(int * keys, std::map<int, int> scores, _Float64 * results, int size) {
+_Float64 * ScoreRetriver::getScoreData(int * keys, std::map<int, int> scores, int size) {
+    static _Float64 results[size];
+    _Float64 * rePtr =  results;
+
     int num_threads = std::thread::hardware_concurrency();
     if (!num_threads) {num_threads++;}
 
@@ -26,13 +29,15 @@ void ScoreRetriver::getScoreData(int * keys, std::map<int, int> scores, _Float64
 
     for (int i = 0; i < num_threads; i++ ) {
         threads.emplace_back(
-            std::thread {ScoreRetriver::popArr, (i * idx), ((i + 1) * idx), size, keys, scores, results}
+            std::thread {ScoreRetriver::popArr, (i * idx), ((i + 1) * idx), size, keys, scores, rePtr}
         );
     }
 
     for (auto& t: threads){
         t.join();
     }
+
+    return results;
 }
 
 void ScoreRetriver::popArr(int start, int end, int max, int * keys, std::map<int, int> scores, _Float64 * results) {

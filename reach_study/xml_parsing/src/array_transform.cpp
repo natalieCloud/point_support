@@ -17,6 +17,20 @@ namespace ReachArray {
         return Eigen::Matrix4d(poseArray).block<3,1>(0, 3);
     }
 
+    void ArrayTF::getGeoPose(_Float64 * poseArray, geometry_msgs::msg::Pose * newPose) {
+        Eigen::Quaternion<_Float64> quat = ArrayTF::getQuaternion(poseArray);
+        Eigen::Vector3d position = ArrayTF::getTranslation(poseArray);
+
+        newPose->orientation.w = quat.w();
+        newPose->orientation.x = quat.x();
+        newPose->orientation.y = quat.y();
+        newPose->orientation.z = quat.z();
+        newPose->position.x = position.x();
+        newPose->position.y = position.y();
+        newPose->position.z = position.z();
+
+    }
+
     Eigen::Isometry3d ArrayTF::setIsometry(_Float64 * poseArray) {
         Eigen::Matrix4d matrix(poseArray);
         Eigen::Isometry3d poseMatrix = Eigen::Isometry3d::Identity();

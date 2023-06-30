@@ -10,4 +10,26 @@
 
 namespace Scorter {
 
+std::mutex sharedMutex;
+
+std::vector<_Float64> * Retriever::getScoreData(geometry_msgs::msg::Pose * poseKeys,
+        std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData> reachStudyMap,
+        int size) {
+    
+    std::vector<_Float64> results;
+    _Float64 
+
+}
+
+void Retriever::populateResults(int start, int end, int max, geometry_msgs::msg::Pose * poseKeys,
+        std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData> reachStudyMap,
+        _Float64 * results) {
+
+    std::lock_guard<std::mutex> lock(sharedMutex);
+    for (int i = start; i < end && i < max; i++) {
+        results[i] = reachStudyMap[poseKeys[i]].score;
+    }
+
+}
+
 } //namespace Scorter

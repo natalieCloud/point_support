@@ -3,7 +3,7 @@
 
 #include "research_structs.hpp"
 #include "rclcpp/rclcpp.hpp"
-#include "geometry_msgs/msg/pose_array.hpp"
+#include "geometry_msgs/msg/pose.hpp"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -22,7 +22,7 @@
 /**
  * @namespace Scorter
  * 
- * @brief Score-Sorter [descending into lame pun namespaces now]
+ * @brief Score-Sorter [descending into lame pun namespaces]
 */
 namespace Scorter {
 
@@ -43,18 +43,26 @@ class Retriever {
      * @param poseKeys: A poseArray that will act as the keys for the data in the reachStudyMap
      * @param reachStudyMap: A map that contains all of the data pulled from the reach_study in xml_parsing
      * with the keys being of type pose and the results containing the return sucess and score!
-     * @param results: An array that contains all of the return scores indexed in the same manner
-     * as the poseKey results! //TODO: Make this last param into a return type? Not as nessesary as
-     * in the whole client file but might be useful here!
      */
-    static void getScoreData(geometry_msgs::msg::PoseArray * poseKeys, 
-        std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> reachStudyMap,
-        _Float64 * results);
+    static std::vector<_Float64> * getScoreData(geometry_msgs::msg::Pose * poseKeys, 
+        std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData> reachStudyMap,
+        int size);
 
     private:
 
-    static void populateResults(int start, int end, int max, geometry_msgs::msg::PoseArray * poseKeys,
-        std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> reachStudyMap,
+    /**
+     * @brief Runs through the beginning and end indicies of a list adding the associated key values 
+     * to a new "results" list! 
+     * 
+     * @param poseKeys: A poseArray that will act as the keys for the data in the reachStudyMap
+     * @param reachStudyMap: A map that contains all of the data pulled from the reach_study in xml_parsing
+     * with the keys being of type pose and the results containing the return sucess and score!
+     * @param results: An vector that contains all of the return scores indexed in the same manner
+     * as the poseKey results! (Non returnable since the same map needs to be populated without
+     * being overwritten! ^^)
+     */
+    static void populateResults(int start, int end, int max, geometry_msgs::msg::Pose * poseKeys,
+        std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData> reachStudyMap,
         _Float64 * results);
 
 };

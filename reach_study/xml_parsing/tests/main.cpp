@@ -8,22 +8,22 @@ void testVector(std::string fname, int num) {
 
     for (int i = 0; i < num; i++) {
         std::cout << poses[i].result.reachable << std::endl;
-        std::cout << poses[i].pose.translation << std::endl;
-        std::cout << poses[i].pose.quater << std::endl;
+        std::cout << poses[i].newPose.position.x << std::endl;
+        std::cout << poses[i].newPose.orientation.w << std::endl;
         std::cout << (poses[i].result.reachable? "Sucess! " : "Rip") << std::endl;
         std::cout << poses[i].result.score << std::endl;
     }
 }
 
 void testMap(std::string fname, int num) {
-    std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> poses = ReachXML::XMLParser::parseMap(fname);
-    std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData>::iterator it = poses.begin();
+    std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData> poses = ReachXML::XMLParser::parseMap(fname);
+    std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData>::iterator it = poses.begin();
     std::cout <<poses.size() << std::endl << std::endl;
 
     for (int i = 0; i < num && it != poses.end(); i++) {
         std::cout << it->second.reachable <<std::endl;
-        std::cout << it->first.translation <<std::endl;
-        std::cout << it->first.quater << std::endl;
+        std::cout << it->first.position.x <<std::endl;
+        std::cout << it->first.orientation.w << std::endl;
         std::cout << (it->second.reachable? "Sucess!" : "Rip") << std::endl;
         std::cout << it->second.score <<std::endl;
     }

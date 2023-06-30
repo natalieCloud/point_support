@@ -51,7 +51,7 @@ class XMLParser {
          * 
          * @param fname: The name of the file that the user pases in for the xml to read from.
          */
-        static std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> parseMap(const std::string fname);
+        static std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData> parseMap(const std::string fname);
 
         /**
          * @brief The size of the pose matrix (Will be uneeded? if we change to a quaternion!)
@@ -101,7 +101,7 @@ class XMLParser {
          * 
          * @returns A vector populated with filled ReachData key-value pairs 
          */
-        static std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> populatePoseMap(rapidxml::xml_node<> * item_node, int count); 
+        static std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData> populatePoseMap(rapidxml::xml_node<> * item_node, int count); 
 
         /**
          * @brief This function populates a struct with all the pose and reach data
@@ -121,6 +121,15 @@ class XMLParser {
          * @returns An array of Isometery3D data
          */
         static _Float64 * getPoseMatrix(rapidxml::xml_node<> * item_node); 
+
+        /**
+         * @brief This function populates a pose with the data from the array of data!
+         * 
+         * @param poseArray: The pose data from the xml file in array form!
+         * 
+         * @returns A pose full of the array data!
+         */
+        static geometry_msgs::msg::Pose getPose(_Float64 * poseArray);
 
 };
 

@@ -73,11 +73,13 @@
         "codecvt": "cpp",
         "future": "cpp",
         "shared_mutex": "cpp",
-        "cfenv": "cpp"
+        "cfenv": "cpp",
+        "geometry": "cpp"
     },
     "workbench.colorCustomizations": {
         "activityBar.background": "#3F1D58",
         "titleBar.activeBackground": "#58297C",
         "titleBar.activeForeground": "#FDFBFE"
-    }
+    },
+    "ros.distro": "humble"
 }
