@@ -18,7 +18,7 @@ find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
 # Add Executables
-add_executable(runNode tests/run_nodes_test.cpp)
+add_executable(runNode tests/run_nodes_test.cpp src/array_transform.cpp src/xml_parser.cpp)
 ament_target_dependencies (
     runNode
     rclcpp
