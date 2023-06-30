@@ -1,13 +1,34 @@
 cmake_minimum_required(VERSION 3.5)
 
-project("reach-parse")
+project("parse-reach")
 
-add_library(reach-parse STATIC src/array_transform.cpp src/xml_parser.cpp 
-    include/reach_parse/array_transform.hpp include/reach_parse/xml_parser.hpp)
-
-install(TARGETS reach-parse DESTINATION lib/results)
-
-if(CMAKE_VERSION VERSION_GREATER 3.12)
-    set_property(TARGET reach-parse PROPERTY CXX_STANDARD 20)
+# Set C99 standard
+if (NOT CMAKE_C_STANDARD)
+    set(CMAKE_C_STANDARD 99)
 endif()
 
+# Set C++14 standard
+if (NOT CMAKE_CXX_STANDARD)
+    set(CMAKE_CXX_STANDARD 14)
+endif()
+
+# Dependencies
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(geometry_msgs REQUIRED)
+
+# Add Executables
+add_executable(runNode tests/run_nodes_test.cpp)
+ament_target_dependencies (
+    runNode
+    rclcpp
+    geometry_msgs
+)
+
+# Install
+install(TARGETS
+    runNode
+    DESTINATION lib/${PROJECT_NAME}
+)
+
+ament_package()
