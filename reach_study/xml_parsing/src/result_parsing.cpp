@@ -17,7 +17,29 @@ std::vector<_Float64> * Retriever::getScoreData(geometry_msgs::msg::Pose * poseK
         int size) {
     
     std::vector<_Float64> results;
-    _Float64 
+    results.reserve(size);
+
+    _Float64 resultArr[size];
+    _Float64 * arrPtr = resultArr;
+
+    int num_threads = std::thread::hardware_concurrency();
+    if(!num_threads) {num_threads++;}
+
+    int inc_size = size/num_threads + 1;
+
+    std::vector<std::thread> threads;
+    threads.reserve(num_threads);
+
+    for (int i = 0; i < num_threads; i++) {
+        threads.emplace_back(
+                std::thread {Retriever::populateResults,
+                (i * inc_size), ((i + 1) * inc_size), size, poseKeys, reachStudyMap, arrPtr}
+        );
+    }
+    for (auto& t : threads) {
+        t.join();
+    }
+
 
 }
 
