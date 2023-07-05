@@ -32,7 +32,7 @@ std::vector<PS_RESTRUCTS_H::Restructs::ReachData> XMLParser::parseXML(std::strin
     return poses;
 }
 
-std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData> XMLParser::parseMap(std::string fname) {
+std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> XMLParser::parseMap(std::string fname) {
 
     rapidxml::xml_document<> doc;
     rapidxml::xml_node<> * root_node;
@@ -47,7 +47,7 @@ std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData> XMLPar
 
     int count = XMLParser::getItemCount(root_node);
     rapidxml::xml_node<> * item_node = XMLParser::descendToItem(root_node);
-    std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData> poses = XMLParser::populatePoseMap(item_node, count);
+    std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> poses = XMLParser::populatePoseMap(item_node, count);
 
     return poses;
 }
@@ -80,13 +80,13 @@ std::vector<PS_RESTRUCTS_H::Restructs::ReachData> XMLParser::populatePoses(rapid
     return poseVector;
 }
 
-std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData> XMLParser::populatePoseMap(rapidxml::xml_node<> * item_node, int count) {
-    std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData> poseMap;
+std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> XMLParser::populatePoseMap(rapidxml::xml_node<> * item_node, int count) {
+    std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> poseMap;
 
     for (int i = 0; i < count && item_node; i++) {
         PS_RESTRUCTS_H::Restructs::ReachData pose;
         XMLParser::populateStruct(item_node, &pose);
-        poseMap.emplace(pose.newPose, pose.result);
+        poseMap.emplace(pose.pose, pose.result);
     }
 
     return poseMap;
@@ -94,11 +94,12 @@ std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData> XMLPar
 
 void XMLParser::populateStruct(rapidxml::xml_node<> * item_node, struct PS_RESTRUCTS_H::Restructs::ReachData *data) {
     
-    data->newPose = XMLParser::getPose(XMLParser::getPoseMatrix(item_node));
     data->pose.quater = POINT_SUPPORT_ARRAY_TRANSFORM_H::ReachArray::ArrayTF::getQuaternion(XMLParser::getPoseMatrix(item_node));
     data->pose.translation = POINT_SUPPORT_ARRAY_TRANSFORM_H::ReachArray::ArrayTF::getTranslation(XMLParser::getPoseMatrix(item_node));
+    // reachable = item->reached
     data->result.reachable = std::stoi(item_node->first_node()->value());
-    data->result.score = std::atof(item_node->first_node()->next_sibling()->next_sibling()->value());
+    // score = item->:reached->goal->seed_state->goal_state->score
+    data->result.score = std::atof(item_node->first_node()->next_sibling()->next_sibling()->next_sibling()->next_sibling()->value());
 
 }
 
@@ -115,14 +116,6 @@ _Float64 * XMLParser::getPoseMatrix(rapidxml::xml_node<> * item_node) {
         item_node = item_node->next_sibling();
     }
     return numMatrix;  
-}
-
-geometry_msgs::msg::Pose XMLParser::getPose(_Float64 * poseArray) {
-
-    geometry_msgs::msg::Pose newPose;
-    geometry_msgs::msg::Pose * posePtr;
-    POINT_SUPPORT_ARRAY_TRANSFORM_H::ReachArray::ArrayTF::getGeoPose(poseArray, posePtr);
-    return newPose;
 }
 
 } //namespace ReachXML

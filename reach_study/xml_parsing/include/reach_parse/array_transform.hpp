@@ -2,7 +2,7 @@
 #define POINT_SUPPORT_ARRAY_TRANSFORM_H
 
 #include <eigen3/Eigen/Geometry>
-#include <geometry_msgs/msg/pose.hpp>
+#include "research_structs.hpp"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -51,16 +51,6 @@ class ArrayTF {
          * A 3x1 matrix of the pose's xyz coordinates!
          */
         static Eigen::Vector3d getTranslation(_Float64 * poseArray);
-
-        /**
-         * @brief This function inputs an array of pose data (representing a matrix of type
-         * Isometrey3D) and performs a series of transformations to produce a quaternion.
-         * 
-         * @param poseArray: The array holding the pose information
-         * 
-         * @param newPose: The pose needing to be populated
-         */
-        static void getGeoPose(_Float64 * poseArray, geometry_msgs::msg::Pose * newPose);
 
     private:
 

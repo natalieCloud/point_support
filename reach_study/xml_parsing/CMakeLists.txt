@@ -25,9 +25,17 @@ ament_target_dependencies (
     geometry_msgs
 )
 
+add_executable(testMain tests/main.cpp src/array_transform.cpp src/xml_parser.cpp)
+ament_target_dependencies (
+    runNode
+    rclcpp
+    geometry_msgs
+)
+
 # Install
 install(TARGETS
     runNode
+    testMain
     DESTINATION lib/${PROJECT_NAME}
 )
 

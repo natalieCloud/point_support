@@ -2,8 +2,8 @@
 #define PS_RESULT_THREADING_H
 
 #include "research_structs.hpp"
-#include "rclcpp/rclcpp.hpp"
-#include "geometry_msgs/msg/pose.hpp"
+//#include "rclcpp/rclcpp.hpp"
+//#include "geometry_msgs/msg/pose.hpp"
 
 #include <stdlib.h>
 #include <stdio.h>
