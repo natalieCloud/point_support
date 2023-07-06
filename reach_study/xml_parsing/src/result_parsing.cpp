@@ -17,7 +17,6 @@ std::vector<_Float64> Retriever::getScoreData(geometry_msgs::msg::PoseArray pose
         int size) {
     
     std::vector<_Float64> results;
-
     _Float64 resultArr[size];
     _Float64 * arrPtr = resultArr;
 
@@ -25,8 +24,6 @@ std::vector<_Float64> Retriever::getScoreData(geometry_msgs::msg::PoseArray pose
     if(!num_threads) {num_threads++;}
 
     int inc_size = size/num_threads + 1;
-
-    //std::cout << inc_size << std::endl;
 
     std::vector<std::thread> threads;
     threads.reserve(num_threads);
@@ -42,11 +39,6 @@ std::vector<_Float64> Retriever::getScoreData(geometry_msgs::msg::PoseArray pose
     }
 
     results.insert(results.end(), &resultArr[0], &resultArr[size]);
-    //copy(&resultArr[0], &resultArr[size], back_inserter(results));
-
-    std::vector<_Float64> * resPtr;
-    //std::cout << results[0] << std::endl;
-
     return results;
 }
 
@@ -56,12 +48,8 @@ void Retriever::populateResults(int start, int end, int max, geometry_msgs::msg:
 
     std::lock_guard<std::mutex> lock(sharedMutex);
     for (int i = start; i < end && i < max; i++) {
-        geometry_msgs::msg::Pose temp = poseKeys.poses[i];
-        geometry_msgs::msg::Pose * tPtr = &temp;
-        results[i] = reachStudyMap[Retriever::getKey(tPtr)].score;
-        std::cout << results[i] << std::endl;
-        //results[i] = reachStudyMap[Retriever::getKey(&poseKeys.poses[i])].score;
-        //std::cout << poseKeys.poses[i].position << std::endl;
+        geometry_msgs::msg::Pose * temp = &poseKeys.poses[i];
+        results[i] = reachStudyMap[Retriever::getKey(temp)].score;
     }
 
 }
