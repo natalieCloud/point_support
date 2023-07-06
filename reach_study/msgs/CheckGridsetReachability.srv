@@ -1,0 +1,4 @@
+geometry_msgs/PoseArray[] waypoints #The pose array!
+---
+geometry_msgs/PoseArray[] waypoints #The pose array!
+Float64[] #The reachability scores
