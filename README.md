@@ -9,4 +9,4 @@ The **point_support** package allows conversion of user input to a text file, an
 
 The **reach_study** package contains the msg files that allow the linkage of a ``PoseArray`` to its associated reachability scores as returned after the reach score has been conducted on those points! 
 
-:D 
+:3
