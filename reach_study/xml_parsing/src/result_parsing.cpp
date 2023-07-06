@@ -12,12 +12,11 @@ namespace Scorter {
 
 std::mutex sharedMutex;
 
-std::vector<_Float64> * Retriever::getScoreData(geometry_msgs::msg::Pose * poseKeys,
-        std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData> reachStudyMap,
+std::vector<_Float64> Retriever::getScoreData(geometry_msgs::msg::PoseArray poseKeys,
+        std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> reachStudyMap,
         int size) {
     
     std::vector<_Float64> results;
-    results.reserve(size);
 
     _Float64 resultArr[size];
     _Float64 * arrPtr = resultArr;
@@ -26,6 +25,8 @@ std::vector<_Float64> * Retriever::getScoreData(geometry_msgs::msg::Pose * poseK
     if(!num_threads) {num_threads++;}
 
     int inc_size = size/num_threads + 1;
+
+    //std::cout << inc_size << std::endl;
 
     std::vector<std::thread> threads;
     threads.reserve(num_threads);
@@ -40,18 +41,41 @@ std::vector<_Float64> * Retriever::getScoreData(geometry_msgs::msg::Pose * poseK
         t.join();
     }
 
+    results.insert(results.end(), &resultArr[0], &resultArr[size]);
+    //copy(&resultArr[0], &resultArr[size], back_inserter(results));
 
+    std::vector<_Float64> * resPtr;
+    //std::cout << results[0] << std::endl;
+
+    return results;
 }
 
-void Retriever::populateResults(int start, int end, int max, geometry_msgs::msg::Pose * poseKeys,
-        std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData> reachStudyMap,
+void Retriever::populateResults(int start, int end, int max, geometry_msgs::msg::PoseArray poseKeys,
+        std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> reachStudyMap,
         _Float64 * results) {
 
     std::lock_guard<std::mutex> lock(sharedMutex);
     for (int i = start; i < end && i < max; i++) {
-        results[i] = reachStudyMap[poseKeys[i]].score;
+        geometry_msgs::msg::Pose temp = poseKeys.poses.front();
+        geometry_msgs::msg::Pose * tPtr = &temp;
+        results[i] = reachStudyMap[Retriever::getKey(tPtr)].score;
+        std::cout << results[i] << std::endl;
+        //results[i] = reachStudyMap[Retriever::getKey(&poseKeys.poses[i])].score;
+        //std::cout << poseKeys.poses[i].position << std::endl;
     }
 
+}
+
+PS_RESTRUCTS_H::Restructs::PoseData Retriever::getKey(geometry_msgs::msg::Pose * pose) {
+    PS_RESTRUCTS_H::Restructs::PoseData poseD;
+    poseD.translation.x() = pose->position.x;
+    poseD.translation.y() = pose->position.y;
+    poseD.translation.z() = pose->position.z;
+    poseD.quater.x() = pose->orientation.x;
+    poseD.quater.y() = pose->orientation.y;
+    poseD.quater.z() = pose->orientation.z;
+    poseD.quater.w() = pose->orientation.w;
+    return poseD;
 }
 
 } //namespace Scorter

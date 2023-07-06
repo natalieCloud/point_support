@@ -87,6 +87,7 @@ std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultD
         PS_RESTRUCTS_H::Restructs::ReachData pose;
         XMLParser::populateStruct(item_node, &pose);
         poseMap.emplace(pose.pose, pose.result);
+        item_node = item_node->next_sibling();
     }
 
     return poseMap;

@@ -2,14 +2,16 @@
 #define PS_RESULT_THREADING_H
 
 #include "research_structs.hpp"
-//#include "rclcpp/rclcpp.hpp"
-//#include "geometry_msgs/msg/pose.hpp"
+#include <rclcpp/rclcpp.hpp>
+#include "geometry_msgs/msg/pose.hpp"
+#include "geometry_msgs/msg/pose_array.hpp"
 
-#include <stdlib.h>
 #include <stdio.h>
 
 #include <thread>
 #include <mutex>
+#include <map>
+#include <vector>
 
 /**
  * @author Natalie Chmura
@@ -44,8 +46,8 @@ class Retriever {
      * @param reachStudyMap: A map that contains all of the data pulled from the reach_study in xml_parsing
      * with the keys being of type pose and the results containing the return sucess and score!
      */
-    static std::vector<_Float64> * getScoreData(geometry_msgs::msg::Pose * poseKeys, 
-        std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData> reachStudyMap,
+    static std::vector<_Float64> getScoreData(geometry_msgs::msg::PoseArray poseKeys, 
+        std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> reachStudyMap,
         int size);
 
     private:
@@ -61,9 +63,19 @@ class Retriever {
      * as the poseKey results! (Non returnable since the same map needs to be populated without
      * being overwritten! ^^)
      */
-    static void populateResults(int start, int end, int max, geometry_msgs::msg::Pose * poseKeys,
-        std::map<geometry_msgs::msg::Pose, PS_RESTRUCTS_H::Restructs::ResultData> reachStudyMap,
+    static void populateResults(int start, int end, int max, geometry_msgs::msg::PoseArray poseKeys,
+        std::map<PS_RESTRUCTS_H::Restructs::PoseData, PS_RESTRUCTS_H::Restructs::ResultData> reachStudyMap,
         _Float64 * results);
+
+    /**
+     * @brief Puts the pose data into the poseData (struct) format to be used as a key! for the map!
+     * 
+     * @param pose: A pose that will act as the key in a data set in reachStudyMap once converted into 
+     * a poseData struct!
+     * 
+     * @returns: The pose data struct that contains the pose data and is able to be used as a key in the map!
+     */ 
+    static PS_RESTRUCTS_H::Restructs::PoseData getKey(geometry_msgs::msg::Pose * pose);
 
 };
 

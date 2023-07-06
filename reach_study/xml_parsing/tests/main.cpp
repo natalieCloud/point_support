@@ -40,10 +40,10 @@ int main(int argc, char **argv) {
     std::cin >> numpoints;
 
     std::cout << "Now testing vector mode...\n";
-    testVector("../../reach_support_files/reach.db.xml", numpoints);
+    testVector("src/point_support/reach_study/reach_support_files/reach.db.xml", numpoints);
 
     std::cout << "Now testing map mode...\n";
-    testMap("../../reach_support_files/reach.db.xml", numpoints);
+    testMap("src/point_support/reach_study/reach_support_files/reach.db.xml", numpoints);
 
     return 0;
 }
