@@ -56,7 +56,7 @@ void Retriever::populateResults(int start, int end, int max, geometry_msgs::msg:
 
     std::lock_guard<std::mutex> lock(sharedMutex);
     for (int i = start; i < end && i < max; i++) {
-        geometry_msgs::msg::Pose temp = poseKeys.poses.front();
+        geometry_msgs::msg::Pose temp = poseKeys.poses[i];
         geometry_msgs::msg::Pose * tPtr = &temp;
         results[i] = reachStudyMap[Retriever::getKey(tPtr)].score;
         std::cout << results[i] << std::endl;
