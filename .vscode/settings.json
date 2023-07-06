@@ -71,8 +71,21 @@
         "thread": "cpp",
         "cinttypes": "cpp",
         "typeindex": "cpp",
-        "typeinfo": "cpp"
-
+        "typeinfo": "cpp",
+        "variant": "cpp",
+        "*.srv": "cpp",
+        "csignal": "cpp",
+        "strstream": "cpp",
+        "codecvt": "cpp",
+        "future": "cpp",
+        "shared_mutex": "cpp",
+        "cfenv": "cpp",
+        "geometry": "cpp"
+    },
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#3F1D58",
+        "titleBar.activeBackground": "#58297C",
+        "titleBar.activeForeground": "#FDFBFE"
     },
     "ros.distro": "humble"
 }

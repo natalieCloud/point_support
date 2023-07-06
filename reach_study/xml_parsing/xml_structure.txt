@@ -1,0 +1,34 @@
+
+XML STUCTURE:
+
+<xml version...>
+<!DOCTYPE...>
+<boost_serilization...>
+<db ... >
+    <results ...>
+        <count>
+        <item_version ...>
+        <item_class_id>
+            <count>
+            <item_version>
+            <item>
+                <reached>
+                <goal>
+                     <matrix>
+                        <count>
+                        <item>...</item>
+                        <item>...</item>
+                         x16 (overall, 14 more)
+                     </matrix>
+                 </goal>
+                 <score>...</score>
+             </item>
+             repeat till the end of the file for num points in count (at this level)
+
+
+/**
+ * TODO:
+ * Change the above includes in a way that does not depend on the file structure currently 
+ * held. i.e figure out a way for the rapidxml.hpp to be pulled into whatever program may use
+ * this code if it ends up being ported into something else.
+*/

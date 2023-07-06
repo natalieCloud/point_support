@@ -1,2 +1,2 @@
 std_msgs/Header global_header
-geometry/msgs/Pose[] poses
+geometry_msgs/Pose[] poses

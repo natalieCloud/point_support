@@ -1,0 +1,6 @@
+reach_study_results: 
+  name: reach_results
+  file: package://point_support/reach_study/reach_support_files/reach.db.xml
+
+reach_pose_array:
+  name: pose_array
