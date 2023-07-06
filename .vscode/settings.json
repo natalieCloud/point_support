@@ -1,4 +1,10 @@
 {
+
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#3F1D58",
+        "titleBar.activeBackground": "#58297C",
+        "titleBar.activeForeground": "#FDFBFE"
+
     "files.associations": {
         "*.tcc": "cpp",
         "deque": "cpp",
@@ -66,6 +72,7 @@
         "cinttypes": "cpp",
         "typeindex": "cpp",
         "typeinfo": "cpp"
+
     },
     "ros.distro": "humble"
 }
